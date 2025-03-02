@@ -1,5 +1,6 @@
 import telebot
 import os
+import random
 from bot_logic import gen_pass
 
 text_messages = {
@@ -7,7 +8,7 @@ text_messages = {
         u'Привет, Я твой бот Бро,\n'
         u'У меня есть кучу команд.\n'
         u'Вот они: '
-        u'start, hello, bye, password, heh, help/info',
+        u'start, hello, bye, password, heh, help/info, mem, eco, why need eco?'
 }
 
 
@@ -17,7 +18,7 @@ bot = telebot.TeleBot("TOKEN")
     
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.reply_to(message, "Привет! Я твой Telegram бот. Напиши что-нибудь!")
+    bot.reply_to(message, "Привет! Я твой Бот, приятно видеть тебя :)")
     
 @bot.message_handler(commands=['hello'])
 def send_hello(message):
@@ -40,6 +41,24 @@ def send_heh(message):
 @bot.message_handler(commands=['info', 'help'])
 def on_info(message):
     bot.reply_to(message, text_messages['info'])
+
+@bot.message_handler(commands=['mem'])
+def send_mem(message):
+    file_list = os.listdir("images")
+    img_name = random.choice(file_list)
+    with open(f'images/{img_name}', 'rb') as f:  
+        bot.send_photo(message.chat.id, f)
+
+@bot.message_handler(commands=['eco'])
+def send_eco(message):
+    file_list = os.listdir("images_eco")
+    name = random.choice(file_list)
+    with open(f'images_eco/{name}', 'rb') as a:  
+        bot.send_photo(message.chat.id, a)
+
+@bot.message_handler(commands=['why need eco?'])
+def send_bye(message):
+    bot.reply_to(message, "Если мы не будем беречь природу, то тогда мы все умрём :)")
 
     
 @bot.message_handler(func=lambda message: True)
