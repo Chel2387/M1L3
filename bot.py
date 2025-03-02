@@ -60,6 +60,10 @@ def send_eco(message):
 def send_bye(message):
     bot.reply_to(message, "Если мы не будем беречь природу, то тогда мы все умрём :)")
 
+@bot.message_handler(commands=['trash'])
+def send_bye(message):
+    bot.reply_to(message, "Стекло - зелёный бак, Пластик - красный бак, Метал - жёлтый бак, Бумага - синий бак")
+
     
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
